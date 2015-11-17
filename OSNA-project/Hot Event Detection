@@ -1,0 +1,29 @@
+Work flow is as follows:
+
+Hot event detection, analysis and prediction
+
+Preparation:
+(1)	Collect data from tweets, using the recent two weeks’ data, one user one file and one tweets per line;
+(2)	Do tokenization. Remember to remove stop words and punctuations, and use utf8 encoding;
+
+Phase1: hot event detection:
+(1)	Compute TF（TermFrequency）and rank terms by frequency from high to low; (Basic method to extract hot words that indicating hot event)
+(2)	Compute sentiment of each term by using SentiWordnet; Then see the high frequency words’ sentiment. (Improvement 1 by considering the high frequent words’ sentiment, this intends to filter out some functionless or meaningless words with high frequency.)
+(3)	Use LDA model to generate topics from data, and find hot event from topic keywords by calculating which topic covers the most high frequent and sentiment words.(Improvement 2)
+(4)	Evaluate and compare those three methods.
+
+Phase2: hot event analysis
+(1)	Find tweets that relate to hot event, this should be done within the data we collect. Remove the tweets that have no relation with this hot event, which means you may remove some lines in a user’s tweets file. (The basic way is to find whether there are hot event words in the tweets; The other way is compute the relativeness of one tweets and hot event, we will use word2vec to do this.)
+(2)	Get the demographic information on this hot event.
+User name: get all the users’ names, and make relationship with this user’s tweets file;
+Age: get the age of this user;
+Geographic: get the position of this user, country and city. 
+From the above information, we can analyze (a) distribution of gender who pay attention to this hot event; (b)distribution of age; (c)distribution of geographic, whether people are more caring about events happening around?
+(3)	sentiment analysis of public opinion
+Classify tweets into positive tweets and negative tweets(a. We can compute the sum of each word’s sentiment; b. We first find which kind of sentiment words are more frequent than the other, and then sum the more frequent words’ sentiment scores; c. label data by man and train classifier for the positive tweets and negative tweets. D. Get the representation word for each user’s tweets by using word2vec and then compute this user’s sentiment score. ) 
+Analyze the proportion of positive and negative opinions on this hot evert;
+Do geographic analysis both in positive tweets and negative tweets;
+What are the characters for the dominating population? 
+
+Phase3: prediction of the further spread of this hot event
+(1)	Get the followers of the users who had paid attention to this hot event, and this follower has not yet pay attention to this event. How many new followers have not paid attention? How many of the positive users’ followers and how many of the negative user’s followers?(This means will the event spread with more positive effect or negative effect?)
